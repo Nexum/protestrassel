@@ -47,10 +47,10 @@ module.exports = class CanvasGame {
         this.game.load.spritesheet('animation', 'img/animation.png', 640, 506, 4);
         this.game.load.bitmapFont('font1', 'font/LiquorstoreJazz.png', 'font/LiquorstoreJazz.fnt');
 
-        this.game.load.audio('level_1', 'sound/Boo.mp3');
+        this.game.load.audio('level_1', 'sound/Rassel.mp3');
         this.game.load.audio('level_2', 'sound/kuhglocke.mp3');
-        this.game.load.audio('level_3', 'sound/Rassel.mp3');
-        this.game.load.audio('level_4', 'sound/schellen.mp3');
+        this.game.load.audio('level_3', 'sound/schellen.mp3');
+        this.game.load.audio('level_4', 'sound/Boo.mp3');
         this.game.load.audio('level_5', 'sound/Trillerpfeife.mp3');
 
         this.game.scale.scaleMode = Phaser.ScaleManager.SHOW_ALL;
@@ -97,6 +97,11 @@ module.exports = class CanvasGame {
         this.introText.align = 'center';
         this.introText.x = this.game.width / 2 - this.introText.textWidth / 2;
 
+        this.shakeText = this.game.add.text(0, 0, "Gutbürger: 0", 10);
+        this.shakeText.align = 'left';
+        this.shakeText.x = 0;
+        this.shakeText.alpha = 0;
+
         this.sounds = {
             "level_1": this.game.add.audio('level_1'),
             "level_2": this.game.add.audio('level_2'),
@@ -106,7 +111,14 @@ module.exports = class CanvasGame {
         };
 
         //this.animation.alpha = 0.3;
-        //this.shaking = 20;
+        //this.shaking = 0;
+        /*
+        let debugInterval = setInterval(() => {
+            this.onShake();
+        }, 200);
+        window.SHUTUP = () => {
+            clearInterval(debugInterval);
+        }*/
         //this.onShake();
 
         this.setScale(this.animation);
@@ -133,7 +145,7 @@ module.exports = class CanvasGame {
 
         this.shakingTimeout = setInterval(() => {
             this.onShakeMinus();
-        }, 200);
+        }, 1000);
     }
 
     onShakeMinus() {
@@ -147,8 +159,8 @@ module.exports = class CanvasGame {
     }
 
     shakeUpdate() {
-        if (this.shaking > 25) {
-            this.shaking = 25;
+        if (this.shaking > 20) {
+            this.shaking = 20;
         } else if (this.shaking < 0) {
             this.shaking = 0;
             if (this.shakingTimeout) {
@@ -156,36 +168,48 @@ module.exports = class CanvasGame {
             }
         }
 
+        this.shakeText.setText("Gutbürger: " + this.shaking);
+
         if (this.shaking % 5 === 0) {
             this._showRandomText();
         }
 
         if (this.shaking === 20) {
-            this.sounds.level_5.loopFull(0.3);
+            if (!this.sounds.level_5.isPlaying) {
+                this.sounds.level_5.loopFull(0.3);
+            }
             this.animation.animations.stop('shake');
             this.animation.animations.play('shake', 30, true);
         } else if (this.shaking === 15) {
-            this.sounds.level_4.loopFull();
+            if (!this.sounds.level_4.isPlaying) {
+                this.sounds.level_4.loopFull();
+            }
+            this.sounds.level_5.pause();
             this.animation.animations.stop('shake');
             this.animation.animations.play('shake', 15, true);
         } else if (this.shaking === 10) {
-            this.sounds.level_3.loopFull();
+            if (!this.sounds.level_3.isPlaying) {
+                this.sounds.level_3.loopFull();
+            }
+            this.sounds.level_4.pause();
             this.animation.animations.stop('shake');
             this.animation.animations.play('shake', 13, true);
         } else if (this.shaking === 5) {
-            this.sounds.level_2.loopFull();
+            if (!this.sounds.level_2.isPlaying) {
+                this.sounds.level_2.loopFull();
+            }
+            this.sounds.level_3.pause();
             this.animation.animations.stop('shake');
             this.animation.animations.play('shake', 7, true);
         } else if (this.shaking === 1) {
-            this.sounds.level_1.loopFull();
+            if (!this.sounds.level_1.isPlaying) {
+                this.sounds.level_1.loopFull();
+            }
+            this.sounds.level_2.pause();
             this.animation.animations.play('shake', 3, true);
         } else if (this.shaking === 0) {
+            this.sounds.level_1.pause();
             this.animation.animations.stop('shake');
-            this.sounds.level_1.fadeOut(4000);
-            this.sounds.level_2.fadeOut(3000);
-            this.sounds.level_3.fadeOut(2000);
-            this.sounds.level_4.fadeOut(1000);
-            this.sounds.level_5.fadeOut(500);
         }
     }
 
