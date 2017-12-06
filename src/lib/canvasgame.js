@@ -93,7 +93,7 @@ module.exports = class CanvasGame {
         this.background = this.game.add.sprite(0, 0, 'background');
         this.animation = this.game.add.sprite((this.width / 100) * 0, (this.height / 100) * 46, 'animation');
 
-        this.introText = this.game.add.bitmapText(0, 0, "font1", "SHAKE\nIT\nHARD", 124);
+        this.introText = this.game.add.bitmapText(0, 0, "font1", "SHAKE\n\nHARD", 124);
         this.introText.align = 'center';
         this.introText.x = this.game.width / 2 - this.introText.textWidth / 2;
 
