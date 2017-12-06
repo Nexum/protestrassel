@@ -145,7 +145,7 @@ module.exports = class CanvasGame {
 
         this.shakingTimeout = setInterval(() => {
             this.onShakeMinus();
-        }, 1000);
+        }, 600);
     }
 
     onShakeMinus() {

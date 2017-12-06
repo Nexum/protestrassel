@@ -12,6 +12,10 @@ if (!("ondevicemotion" in window)) {
     alert("Not Supported");
 }
 
+if(navigator.accelerometer) {
+    alert("accelerometer found");
+}
+
 Api.getUser().then((data) => {
     game.setUser(data);
 }, (err) => {
