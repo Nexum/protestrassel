@@ -43,7 +43,7 @@ module.exports = class CanvasGame {
     }
 
     _preload() {
-        this.game.load.image('background', 'img/background.jpg');
+        this.game.load.image('background', 'img/background.png');
         this.game.load.spritesheet('animation', 'img/animation.png', 640, 506, 4);
         this.game.load.bitmapFont('font1', 'font/LiquorstoreJazz.png', 'font/LiquorstoreJazz.fnt');
 
@@ -102,8 +102,13 @@ module.exports = class CanvasGame {
     }
 
     _create() {
+        this.game.stage.backgroundColor = "#FFFFFF";
         this.background = this.game.add.sprite(0, 0, 'background');
         this.animation = this.game.add.sprite((this.width / 100) * 0, (this.height / 100) * 46, 'animation');
+
+        this.game.input.onDown.add(() => {
+            this.onShake();
+        }, this);
 
         this.introText = this.game.add.bitmapText(0, 0, "font1", "SHAKE\n\nHARD", 124);
         this.introText.align = 'center';
@@ -185,8 +190,6 @@ module.exports = class CanvasGame {
                 clearInterval(this.shakingTimeout);
             }
         }
-
-        this.debugText.setText("Gutbürger: " + this.shaking);
 
         if (this.shaking % 5 === 0) {
             this._showRandomText();
