@@ -29,6 +29,8 @@ let config = {
     },
     devServer: {
         open: true,
+        port: 80,
+        host: "0.0.0.0",
         contentBase: __dirname + '/public',
     }
 };
