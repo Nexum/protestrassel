@@ -18,3 +18,13 @@ Api.getUser().then((data) => {
         });
     }
 });
+
+try {
+    if (window.parent) {
+        window.parent.addEventListener('devicemotion', function () {
+            alert("MOVE");
+        });
+    }
+} catch (e) {
+    console.error(e);
+}
