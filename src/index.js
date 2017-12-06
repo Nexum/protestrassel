@@ -4,7 +4,7 @@ const MY_ID = require("uuid/v1")();
 const apiClass = require("adventskalender-js-api");
 
 var Api = new apiClass();
-Api.init(window, "Clementines Extension");
+Api.init(window, "Protestrassel");
 var debug = location.hostname === "localhost";
 var game = new CanvasGame("game");
 
