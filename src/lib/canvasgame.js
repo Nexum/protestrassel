@@ -35,16 +35,19 @@ module.exports = class CanvasGame {
     }
 
     _preload() {
+        console.log("_preload");
         this.game.load.image('background', 'img/background.png');
         this.game.load.spritesheet('animation', 'img/animation.png', 1651, 1307, 4);
     }
 
     _create() {
+        console.log("_create");
         this.animation = this.game.add.sprite(0, 0, 'animation');
         this.animation.width = this.width;
         this.animation.height = this.height;
         this.animation.animations.add('shake');
 
+        console.log("shakeEvent.start");
         this.shakeEvent.start();
         window.addEventListener('shake', () => {
             this.onShake();
