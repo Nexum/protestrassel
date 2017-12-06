@@ -89,6 +89,18 @@ module.exports = class CanvasGame {
         }, 500);
     }
 
+    isDebug() {
+        return this.user ? this.user.isVa : false;
+    }
+
+    _updateDebug() {
+        let debug = "DEBUG:\n";
+        debug += "Level " + this.shaking + "\n";
+        debug += "ondevicemotion " + (("ondevicemotion" in window) ? "yes" : "no") + "\n";
+        debug += "accelerometer " + (("accelerometer" in navigator) ? "yes" : "no") + "\n";
+        this.debugText.setText(debug);
+    }
+
     _create() {
         this.background = this.game.add.sprite(0, 0, 'background');
         this.animation = this.game.add.sprite((this.width / 100) * 0, (this.height / 100) * 46, 'animation');
@@ -97,10 +109,14 @@ module.exports = class CanvasGame {
         this.introText.align = 'center';
         this.introText.x = this.game.width / 2 - this.introText.textWidth / 2;
 
-        this.shakeText = this.game.add.text(0, 0, "Gutbürger: 0", 10);
-        this.shakeText.align = 'left';
-        this.shakeText.x = 0;
-        this.shakeText.alpha = 0;
+        this.debugText = this.game.add.text(0, 0, "Gutbürger: 0", 5);
+        this.debugText.setStyle({
+            fontSize: "10px",
+            backgroundColor: "#FFFFFF"
+        });
+        this.debugText.align = 'left';
+        this.debugText.x = 0;
+        this.debugText.alpha = this.isDebug();
 
         this.sounds = {
             "level_1": this.game.add.audio('level_1'),
@@ -127,6 +143,7 @@ module.exports = class CanvasGame {
         this.animation.animations.add('shake');
 
 
+        this._updateDebug();
         this.shakeEvent.start();
         window.addEventListener('shake', () => {
             this.onShake();
@@ -146,6 +163,7 @@ module.exports = class CanvasGame {
         this.shakingTimeout = setInterval(() => {
             this.onShakeMinus();
         }, 600);
+        this._updateDebug();
     }
 
     onShakeMinus() {
@@ -168,7 +186,7 @@ module.exports = class CanvasGame {
             }
         }
 
-        this.shakeText.setText("Gutbürger: " + this.shaking);
+        this.debugText.setText("Gutbürger: " + this.shaking);
 
         if (this.shaking % 5 === 0) {
             this._showRandomText();
