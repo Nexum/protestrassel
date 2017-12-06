@@ -8,6 +8,10 @@ Api.init(window, "Clementines Extension");
 var debug = location.hostname === "localhost";
 var game = new CanvasGame("game");
 
+if (!("ondevicemotion" in window)) {
+    alert("Not Supported");
+}
+
 Api.getUser().then((data) => {
     game.setUser(data);
 }, (err) => {
