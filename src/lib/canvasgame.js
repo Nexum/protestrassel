@@ -110,7 +110,7 @@ module.exports = class CanvasGame {
             this.onShake();
         }, this);
 
-        this.introText = this.game.add.bitmapText(0, 0, "font1", "SHAKE\n\nHARD", 124);
+        this.introText = this.game.add.bitmapText(0, this.game.height - (80 * 4), "font1", "SHAKE\n\n(OR TOUCH)", 90);
         this.introText.align = 'center';
         this.introText.x = this.game.width / 2 - this.introText.textWidth / 2;
 
