@@ -121,7 +121,7 @@ module.exports = class CanvasGame {
         });
         this.debugText.align = 'left';
         this.debugText.x = 0;
-        this.debugText.alpha = this.isDebug();
+        this.debugText.alpha = 0; //this.isDebug();
 
         this.sounds = {
             "level_1": this.game.add.audio('level_1'),
